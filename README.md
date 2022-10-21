@@ -106,6 +106,6 @@ Almost always the puzzles have sample input that we can use to test we are indee
 
 One more thing: While working on these problems you'll find yourself solving similar problems over and over again, like getting the puzzle input cleanly split up into lines. I encourage you to create a file with a bunch of useful functions in it that you can import as needed.
 
-You'll find the reference solutions folder which 
+You'll find the reference solutions folder which, you know, has reference solutions for the puzzles we'll be talking about. Note that you'll want to run those in the `referenceSolutions` directory for all the paths to work.
 
 Happy coding!
