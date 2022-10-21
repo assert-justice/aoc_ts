@@ -104,4 +104,8 @@ The first line lets us import `fs`, the built in file system module. We have our
 
 Almost always the puzzles have sample input that we can use to test we are indeed getting the correct solution. Let's input that first as we work on the problem. Then we'll try it again with the full data set.
 
+One more thing: While working on these problems you'll find yourself solving similar problems over and over again, like getting the puzzle input cleanly split up into lines. I encourage you to create a file with a bunch of useful functions in it that you can import as needed.
+
+You'll find the reference solutions folder which 
+
 Happy coding!
