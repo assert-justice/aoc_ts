@@ -2,14 +2,14 @@ import * as fs from 'fs';
 import {splitLines} from '../common';
 
 function score(line: string){
-    let [them, you] = line.split(' ');
+    let [elf, me] = line.split(' ');
     const lookup = new Map([['A','X'],['B','Y'],['C','Z'],]);
-    them = lookup.get(them) ?? '';
+    elf = lookup.get(elf) ?? '';
     const beats = new Map([['X','Z'],['Y','X'],['Z','Y'],]);
     const pointLookup = new Map([['X',1],['Y',2],['Z',3]]);
-    let points = pointLookup.get(you) ?? 0;
-    if(beats.get(them) === you){}
-    else if(them === you){
+    let points = pointLookup.get(me) ?? 0;
+    if(beats.get(elf) === me){}
+    else if(elf === me){
         points += 3;
     }
     else{

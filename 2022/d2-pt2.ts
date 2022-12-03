@@ -2,33 +2,28 @@ import * as fs from 'fs';
 import {splitLines} from '../common';
 
 function score(line: string){
-    let [them, you] = line.split(' ');
+    let [elf, me] = line.split(' ');
     const lookup = new Map([['A','X'],['B','Y'],['C','Z'],]);
-    them = lookup.get(them) ?? '';
-    const beats = new Map([['X','Z'],['Y','X'],['Z','Y'],]);
+    elf = lookup.get(elf) ?? '';
     const pointLookup = new Map([['X',1],['Y',2],['Z',3]]);
     const outcomeLookup = new Map([['X',0],['Y',3],['Z',6]]);
+    const beats = new Map([['X','Z'],['Y','X'],['Z','Y'],]);
+    const loses: typeof beats = new Map();
+    for (const [t,y] of beats.entries()) {
+        loses.set(y,t);
+    }
 
-    let points = outcomeLookup.get(you) ?? 0;
+    let points = outcomeLookup.get(me) ?? 0;
     if(points === 0){
-        you = beats.get(them) ?? '';
+        me = beats.get(elf) ?? '';
     }
     else if(points === 3){
-        you = them;
+        me = elf;
     }
     else{
-        // you = ([...beats.entries()].find(([t,y])=>y === them) ?? [0])[0];
-        
-        for (const [t,y] of beats.entries()) {
-            //console.log(t,y);
-            if(y === them){
-                you = t;
-                break;
-            }
-        }
+        me = loses.get(elf) ?? '';
     }
-    points += pointLookup.get(you) ?? 0;
-    // console.log(points);
+    points += pointLookup.get(me) ?? 0;
     
     return points;
 }
