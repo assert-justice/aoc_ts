@@ -1,8 +1,8 @@
 export function splitLines(text: string): string[]{
-    return text.trim().split("\n").map(str => str.trim());
+    return text.trim().split(/\r?\n/);
 }
 
-export function tally<T>(data: T[]): Map<any,number>{
+export function tally<T>(data: T[]): Map<T,number>{
     const res = new Map<T,number>();
     for (const entry of data) {
         res.set(entry, (res.get(entry) ?? 0) + 1);
