@@ -2,9 +2,11 @@ import * as fs from 'fs';
 
 function template(path: string): string{
     return `import * as fs from 'fs';
+import {splitLines} from '../common';
 
 function main(text: string): void{
     // Solution here.
+    const lines = splitLines(text);
 }
 
 main(fs.readFileSync('${path}', {encoding: 'utf-8'}));
