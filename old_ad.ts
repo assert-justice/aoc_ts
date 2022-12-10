@@ -2,7 +2,7 @@ import * as fs from 'fs';
 
 function template(path: string): string{
     return `import * as fs from 'fs';
-import {splitLines} from '../../common';
+import {splitLines} from '../common';
 
 function main(text: string): void{
     // Solution here.
@@ -18,19 +18,15 @@ function main(args: string[]): void{
         console.log("Not enough arguments!");
     }
     const [year, day] = args;
-    const yearPath = `./${year}`;
-    if(!fs.existsSync(yearPath)){
-        fs.mkdirSync(yearPath);
-    }
-    const dirPath = `${yearPath}/d${day}`;
+    const dirPath = `./${year}`;
+    const filePaths = [
+        `${dirPath}/d${day}-pt1.ts`,
+        `${dirPath}/d${day}-pt2.ts`,
+    ];
+    const inputPath = `${dirPath}/d${day}-i.txt`;
     if(!fs.existsSync(dirPath)){
         fs.mkdirSync(dirPath);
     }
-    const filePaths = [
-        `${dirPath}/pt1.ts`,
-        `${dirPath}/pt2.ts`,
-    ];
-    const inputPath = `${dirPath}/input.txt`;
     const text = template(inputPath);
     for (const path of filePaths) {
         fs.writeFileSync(path, text);
