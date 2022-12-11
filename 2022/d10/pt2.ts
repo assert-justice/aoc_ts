@@ -32,7 +32,7 @@ function main(text: string): void{
             x += +line.split(' ')[1];
         }
     }
-    cycle();
+    // cycle();
     
 }
 
