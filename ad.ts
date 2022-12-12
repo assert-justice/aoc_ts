@@ -26,6 +26,10 @@ function main(args: string[]): void{
     if(!fs.existsSync(dirPath)){
         fs.mkdirSync(dirPath);
     }
+    else{
+        console.log("Day already created.");
+        return;
+    }
     const filePaths = [
         `${dirPath}/pt1.ts`,
         `${dirPath}/pt2.ts`,
