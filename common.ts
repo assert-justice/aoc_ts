@@ -1,3 +1,5 @@
+import { listeners } from "process";
+
 export function splitLines(text: string): string[]{
     const lines = text.trim().split(/\r?\n/);
     if(!lines[lines.length - 1]) lines.pop();
@@ -10,6 +12,24 @@ export function tally<T>(data: T[]): Map<T,number>{
         res.set(entry, (res.get(entry) ?? 0) + 1);
     }
     return res;
+}
+
+export function groupLines(lines: string[]) :string[][]{
+    const out :string[][] = [[]];
+    // for (const line of lines) {
+    //     if(line){
+    //         out[out.leng]
+    //     }
+    // }
+    return lines.reduce((ls: string[][], line:string): typeof ls=>{
+        if(line){
+            ls[ls.length-1].push(line);
+        }
+        else{
+            ls.push([]);
+        }
+        return ls;
+    },[[]]);
 }
 
 export class Grid<T> {
