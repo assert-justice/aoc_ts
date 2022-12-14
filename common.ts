@@ -32,6 +32,64 @@ export function groupLines(lines: string[]) :string[][]{
     },[[]]);
 }
 
+export type vec2 = [number, number];
+
+export class HashGrid2D<T> {
+    data: Map<string,T>;
+    startValue: T;
+    separator = ':';
+
+    private toCoord(key: string): vec2{
+        const [x,y] = key.split(this.separator).map(Number);
+        return [x,y];
+    }
+
+    private toKey(x: number, y: number): string{
+        return [x, this.separator, y].join('');
+    }
+
+    set(x: number, y: number, val: T){
+        this.data.set(this.toKey(x, y), val);
+    }
+
+    get(x: number, y: number): T{
+        const val = this.data.get(this.toKey(x, y));
+        if(val === undefined) return this.startValue;
+        return val;
+    }
+
+    setLine(ax: number, ay: number, bx: number, by: number, val: T){
+        
+        let [cx, cy] = [ax, ay];
+        const dx = ax === bx ? 0 : (bx - ax) / Math.abs(bx - ax);
+        const dy = ay === by ? 0 : (by - ay) / Math.abs(by - ay);
+        
+        this.set(cx, cy, val);
+        
+        while(cx !== bx || cy !== by){
+            [cx, cy] = [cx + dx, cy + dy];
+            this.set(cx, cy, val);
+        }
+    }
+
+    getExtents(): [number, number, number, number]{
+        let [xMin, xMax, yMin, yMax] = [Infinity, -Infinity, Infinity, -Infinity];
+        for (const key of this.data.keys()) {
+            const [cx, cy] = this.toCoord(key);
+            xMin = Math.min(xMin, cx);
+            xMax = Math.max(xMax, cx);
+            yMin = Math.min(yMin, cy);
+            yMax = Math.max(yMax, cy);
+        }
+        return [xMin, xMax, yMin, yMax];
+    }
+
+    constructor(startValue: T){
+        this.data = new Map();
+        this.startValue = startValue;
+    }
+}
+
 export class Grid<T> {
     data: T[];
     width: number;
@@ -42,6 +100,7 @@ export class Grid<T> {
 
     }
     getIdx(x: number, y: number): number{
+        if(!this.onGrid(x, y)) throw `Attempted to access invalid coordinate (${x},${y})`;
         return y*this.width+x;
     }
     get(x: number, y: number): T{
@@ -52,6 +111,21 @@ export class Grid<T> {
     }
     onGrid(x: number, y: number):boolean{
         return x >= 0 && x < this.width && y >= 0 && y < this.height;
+    }
+    setLine(ax: number, ay: number, bx: number, by: number, val: T){
+        // console.log(ax, ay, bx, by);
+        
+        let [cx, cy] = [ax, ay];
+        const dx = ax === bx ? 0 : (bx - ax) / Math.abs(bx - ax);
+        const dy = ay === by ? 0 : (by - ay) / Math.abs(by - ay);
+        // console.log(dx, dy);
+        
+        this.set(cx, cy, val);
+        
+        while(cx !== bx || cy !== by){
+            [cx, cy] = [cx + dx, cy + dy];
+            this.set(cx, cy, val);
+        }
     }
 }
 
