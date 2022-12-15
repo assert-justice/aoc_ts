@@ -11,7 +11,8 @@ function main(text: string): void{
     let [x,y] = [0,0];
     for (const seg of lines[0].split(',')) {
         const [dx,dy] = dirs[dNames.indexOf(seg[0])];
-        for (let i = 0; i < +seg[1]; i++) {
+        
+        for (let i = 0; i < +seg.slice(1); i++) {
             grid.set(x,y,1);
             [x,y] = [x+dx, y+dy];
         }
@@ -30,15 +31,19 @@ function main(text: string): void{
     [x,y] = [0,0];
     for (const seg of lines[1].split(',')) {
         const [dx,dy] = dirs[dNames.indexOf(seg[0])];
-        for (let i = 0; i < +seg[1]; i++) {
+        for (let i = 0; i < +seg.slice(1); i++) {
             set(x,y);
             [x,y] = [x+dx, y+dy];
         }
         set(x,y);
     }
+    grid.set(0,0,4);
     const [xMin, xMax, yMin, yMax] = grid.getExtents();
     
-    grid.print(xMin, xMax, yMin, yMax, (v)=>'.#o+'[v]);
+    // const txt = grid.toString(xMin, xMax, yMin, yMax, (v)=>'.#o+x'[v]);
+    // fs.writeFileSync('./2019/d3/out.txt', txt);
+    // console.log([xMin, xMax, yMin, yMax]);
+    
     collide.delete('0:0');
     // console.log(collide);
     let min = Infinity;

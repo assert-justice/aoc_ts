@@ -75,6 +75,7 @@ export class HashGrid2D<T> {
     getExtents(): [number, number, number, number]{
         let [xMin, xMax, yMin, yMax] = [Infinity, -Infinity, Infinity, -Infinity];
         for (const key of this.data.keys()) {
+            
             const [cx, cy] = this.toCoord(key);
             xMin = Math.min(xMin, cx);
             xMax = Math.max(xMax, cx);
@@ -84,7 +85,8 @@ export class HashGrid2D<T> {
         return [xMin, xMax, yMin, yMax];
     }
 
-    print(xMin: number, xMax: number, yMin: number, yMax: number, fn: (a:T)=>string){
+    toString(xMin: number, xMax: number, yMin: number, yMax: number, fn: (a:T)=>string){
+        const lines: string[] = [];
         for(let y = yMin; y <= yMax; y++){
             const line: string[] = [];
             for(let x = xMin; x <= xMax; x++){
@@ -92,9 +94,10 @@ export class HashGrid2D<T> {
                 
                 line.push(fn(val));
             }
-            console.log(line.join(''));
+            lines.push(line.join(''));
             
         }    
+        return lines.join('\n');
     }
 
     constructor(startValue: T){
