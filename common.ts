@@ -39,12 +39,12 @@ export class HashGrid2D<T> {
     startValue: T;
     separator = ':';
 
-    private toCoord(key: string): vec2{
+    toCoord(key: string): vec2{
         const [x,y] = key.split(this.separator).map(Number);
         return [x,y];
     }
 
-    private toKey(x: number, y: number): string{
+    toKey(x: number, y: number): string{
         return [x, this.separator, y].join('');
     }
 
@@ -82,6 +82,19 @@ export class HashGrid2D<T> {
             yMax = Math.max(yMax, cy);
         }
         return [xMin, xMax, yMin, yMax];
+    }
+
+    print(xMin: number, xMax: number, yMin: number, yMax: number, fn: (a:T)=>string){
+        for(let y = yMin; y <= yMax; y++){
+            const line: string[] = [];
+            for(let x = xMin; x <= xMax; x++){
+                const val = this.get(x, y);
+                
+                line.push(fn(val));
+            }
+            console.log(line.join(''));
+            
+        }    
     }
 
     constructor(startValue: T){
